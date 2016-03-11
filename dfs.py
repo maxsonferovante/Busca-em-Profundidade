@@ -1,39 +1,63 @@
-import Pilha
+from Pilha import Pilha
+
 visitados =[]
 
 def foivisitado(alvo):
-    visitado.append(alvo)
-
+    
+    if not visitado(alvo):
+        
+        visitados.append(alvo)
 
 def visitado(alvo):
-    if alvo in visitado:
+    
+    if alvo in visitados:
+
         return True
+
     return False
         
 def dfs(grafo,alvo):
-    i = 0
-    p = Pilha()
-   
-    p.empilha(alvo)
+
+    p = Pilha(grafo)
     
-    while p is not p.vazio():
-        
-        alvo = p.desempilha()
-        
-        if alvo is not visitado(alvo):
-            
-            foivisitado(alvo)
-            
-            for filho in grafo.get[i]:
-                p.empilha(filho)
-            
+    while not p.vazia():
+        if visitado(alvo):
+            return alvo
 
-f = open("base.txt")
+        atual = p.vertice_atual()
 
-grafo = f.read().split('\n')
+        foivisitado(atual)
+        
+        arestas_vertices = p.desempilha()
+
+        for aresta_vertice in arestas_vertices:
+
+            if not visitado(aresta_vertice):
+                foivisitado(aresta_vertice)
+      
+
+##grafo = [[1, [2, 3]], [2, [4]], [3, [6]]]
+
+grafo = []
+cont = 0
+while True:
+    cont = cont + 1
+    op = input(str(cont)+" -> ")
+    if not op:
+        break
+    elif op == '0':
+        grafo.append([cont,[]])
+    elif len(op) == 1:
+        grafo.append([cont,[int(op)]])
+    else:
+        aux = []
+        for i in range(0,len(op)):
+            if i%2==0:
+                aux.append(int(op[i]))
+        grafo.append([cont,aux])
 
 print(grafo)
-i = 0
-print (dfs(grafo,3))
 
+alvo = int(input("ALVO: "))
 
+print(dfs(grafo,alvo))
